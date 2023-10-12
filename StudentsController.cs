@@ -19,21 +19,21 @@ namespace Lab2_24.Controllers
             new Student { Id = 5, Name = "Marian", Age = 20 },
         };
 
-        // Endpoint GET pentru obținerea listei ordonate
+        
         [HttpGet("getAllOrdered")]
         public List<Student> GetAllOrdered()
         {
             return students.OrderBy(s => s.Age).ToList();
         }
 
-        // Endpoint GET pentru obținerea tuturor studenților
+       
         [HttpGet]
         public List<Student> Get()
         {
             return students;
         }
 
-        // Endpoint POST pentru adăugarea unui student
+        
         [HttpPost]
         public List<Student> Add(Student student)
         {
@@ -41,7 +41,7 @@ namespace Lab2_24.Controllers
             return students;
         }
 
-        // Endpoint DELETE pentru ștergerea unui student după ID
+       
         [HttpDelete("{id}")]
         public List<Student> Delete(int id)
         {
