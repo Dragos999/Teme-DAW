@@ -1,101 +1,56 @@
-﻿using System;
+using Lab2_24.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleApp2
+namespace Lab2_24.Controllers
 {
-    internal class Program
+    [Route("api/[controller]")]
+    [ApiController]
+    public class StudentsController : ControllerBase
     {
-        static void Main(string[] args)
+        public static List<Student> students = new List<Student>
         {
-
-            Materie matematica=new Materie("Matematica","3 ore");
-            Materie informatica = new Materie("Informatica", "2 ore");
-            Materie istorie = new Materie("Istorie", "1 ora");
-            Materie fizica = new Materie("Fizica", "2 ore");
-
-            List<Materie> materii = new List<Materie>();
-            List<Student> studenti = new List<Student>();
-
-            materii.Add(fizica);
-            materii.Add(informatica);
-            studenti.Add(new Student("Nedelcu", "Dragos", materii));
-            materii.Clear();
-
-            materii.Add(matematica);
-            materii.Add(fizica);
-            materii.Add(informatica);
-            materii.Add(istorie);
-            studenti.Add(new Student("Popescu", "Ion", materii));
-            materii.Clear();
-
-            materii.Add(matematica);
-            materii.Add(istorie);
-            studenti.Add(new Student("Protopopescu", "Protoion", materii));
-            materii.Clear();
+            new Student { Id = 1, Name = "Ana", Age = 21 },
+            new Student { Id = 2, Name = "Maria", Age = 19 },
+            new Student { Id = 3, Name = "Vlad", Age = 22 },
+            new Student { Id = 4, Name = "Florin", Age = 25 },
+            new Student { Id = 5, Name = "Marian", Age = 20 },
+        };
 
 
-            foreach (Student s in studenti)
-            {
-                s.Afisare();
-                Console.Write("--------------------------------------\n");
-            }
-            Console.ReadKey();
+        [HttpGet("getAllOrdered")]
+        public List<Student> GetAllOrdered()
+        {
+            return students.OrderByDescending(s => s.Name).ToList();
         }
 
-        class Materie
+
+        [HttpGet]
+        public List<Student> Get()
         {
-            private string titlu, durata;
-
-            public Materie()
-            {
-                titlu = "";
-                durata = "";
-            }
-            public Materie(string titlu1,string durata1)
-            {
-                titlu = titlu1;
-                durata = durata1;
-            }
-
-            public void Afisare()
-            {
-                Console.Write(titlu + " (durata: " + durata + ")");
-            }
-        }
-        class Student
-        {
-            private string nume,prenume;
-            private List<Materie> materii;
-            public Student()
-            {
-                nume = "";
-                prenume = "";
-                materii = null;
-            }
-            public Student(string nume1,string prenume1,List<Materie>materii1)
-            {
-                nume = nume1;
-                prenume = prenume1;
-                materii = new List<Materie>();
-                foreach (Materie x in materii1)
-                    materii.Add(x);
-            }
-            
-            public void Afisare()
-            {
-                Console.Write("Studentul " + nume + " " + prenume + " are urmatoarele materii:\n");
-                foreach(Materie x in materii)
-                {
-                    x.Afisare();
-                    Console.Write("\n");
-
-                }
-            }
+            return students;
         }
 
-        
+
+        [HttpPost]
+        public List<Student> Add(Student student)
+        {
+            students.Add(student);
+            return students;
+        }
+
+
+        [HttpDelete("id")]
+        public List<Student> Delete(int id)
+        {
+            var student = students.FirstOrDefault(s => s.Id == id);
+            if (student != null)
+            {
+                students.Remove(student);
+            }
+            return students;
+        }
     }
 }
