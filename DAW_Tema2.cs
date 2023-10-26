@@ -1,4 +1,4 @@
-﻿using Lab2_24.Models;
+using Lab2_24.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -19,21 +19,21 @@ namespace Lab2_24.Controllers
             new Student { Id = 5, Name = "Marian", Age = 20 },
         };
 
-        
+
         [HttpGet("getAllOrdered")]
         public List<Student> GetAllOrdered()
         {
-            return students.OrderBy(s => s.Age).ToList();
+            return students.OrderByDescending(s => s.Name).ToList();
         }
 
-       
+
         [HttpGet]
         public List<Student> Get()
         {
             return students;
         }
 
-        
+
         [HttpPost]
         public List<Student> Add(Student student)
         {
@@ -41,8 +41,8 @@ namespace Lab2_24.Controllers
             return students;
         }
 
-       
-        [HttpDelete("{id}")]
+
+        [HttpDelete("id")]
         public List<Student> Delete(int id)
         {
             var student = students.FirstOrDefault(s => s.Id == id);
