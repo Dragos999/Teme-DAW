@@ -1,0 +1,16 @@
+public IActionResult GetAuthorsWithBooksInclude()
+    {
+        var authorsWithBooks = _context.Authors.Include(a => a.Books).ToList();
+
+        
+    }
+
+    public IActionResult GetAuthorsWithBooksJoin()
+    {
+        var authorsWithBooks = _context.Authors
+            .Join(_context.Books, author => author.AuthorId, book => book.AuthorId,
+                (author, books) => new { Author = author, Books = books.ToList() })
+            .ToList();
+
+        
+    }
