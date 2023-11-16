@@ -1,0 +1,30 @@
+public class PersonService
+{
+    private List<Person> people;
+
+    public PersonService()
+    {
+       
+        people = new List<Person>
+        {
+            new Person { Id = 1, Name = "Nedelcu Dragos", Age = 25 },
+            new Person { Id = 2, Name = "Nedelcu Ioan", Age = 30 }
+        };
+    }
+
+    public List<Person> GetAllPeople()
+    {
+        return people;
+    }
+
+    public Person GetPersonById(int id)
+    {
+        return people.FirstOrDefault(p => p.Id == id);
+    }
+
+    public void AddPerson(Person person)
+    {
+        
+        people.Add(person);
+    }
+}
